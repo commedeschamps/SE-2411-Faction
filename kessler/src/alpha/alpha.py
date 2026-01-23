@@ -2,16 +2,17 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
-import os
+from pathlib import Path
 
-# Define the file path
-file_path = '/home/nurassyl/Desktop/AITU/Com math/Alpha_Altitude.csv'
+# Define the file path relative to the repo root
+REPO_ROOT = Path(__file__).resolve().parents[3]
+file_path = REPO_ROOT / "kessler" / "data" / "raw" / "Alpha_Altitude.csv"
 
 def model_func(x, A, B, C, D, E):
     return A * np.exp(-B * x) + C * np.sin(D * x) + E
 
 def main():
-    if not os.path.exists(file_path):
+    if not file_path.exists():
         print(f"Error: File not found at {file_path}")
         return
 
@@ -70,5 +71,5 @@ def main():
     except Exception as e:
         print(f"An error occurred during fitting: {e}")
 
-if name == "main":
+if __name__ == "__main__":
     main()
